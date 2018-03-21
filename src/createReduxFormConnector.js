@@ -1,6 +1,7 @@
 import lazyCache from 'react-lazy-cache';
 import getDisplayName from './getDisplayName';
 import createHigherOrderComponent from './createHigherOrderComponent';
+import PropTypes from 'prop-types';
 
 /**
  * This component tracks props that affect how the form is mounted to the store. Normally these should not change,
@@ -9,7 +10,7 @@ import createHigherOrderComponent from './createHigherOrderComponent';
 const createReduxFormConnector =
   (isReactNative, React, connect) =>
     (WrappedComponent, mapStateToProps, mapDispatchToProps) => {
-      const {Component, PropTypes} = React;
+      const {Component} = React;
       class ReduxFormConnector extends Component {
         constructor(props) {
           super(props);

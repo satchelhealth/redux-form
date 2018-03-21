@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as importedActions from './actions';
 import getDisplayName from './getDisplayName';
 import {initialState} from './reducer';
@@ -23,7 +24,7 @@ const createHigherOrderComponent = (config,
                                     WrappedComponent,
                                     mapStateToProps,
                                     mapDispatchToProps) => {
-  const {Component, PropTypes} = React;
+  const {Component} = React;
   return (reduxMountPoint, formName, formKey, getFormState) => {
     class ReduxForm extends Component {
       constructor(props) {
