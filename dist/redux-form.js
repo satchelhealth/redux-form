@@ -2252,7 +2252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.fields = _readFields2['default'](nextProps, this.fields, this.asyncValidate, isReactNative);
 	        }
 	        if (!_deepEqual2['default'](this.props.initialValues, nextProps.initialValues)) {
-	          this.props.initialize(nextProps.initialValues);
+	          this.props.initialize(nextProps.initialValues, nextProps.fields);
 	        }
 	      };
 
