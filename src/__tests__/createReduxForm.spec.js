@@ -693,7 +693,7 @@ describe('createReduxForm', () => {
     });
   });
 
-  it('should call destroy on unmount', () => {
+  it('should call destroy on unmount after 200 milliseconds', (done) => {
     const store = makeStore();
     const form = 'testForm';
     const Decorated = reduxForm({
@@ -714,11 +714,14 @@ describe('createReduxForm', () => {
     expect(before.form[form].foo).toBeA('object');
     expect(before.form[form].bar).toBeA('object');
 
-    ReactDOM.unmountComponentAtNode(div);
+    setTimeout(() => {
+      ReactDOM.unmountComponentAtNode(div);
 
-    const after = store.getState();
-    expect(after.form).toBeA('object');
-    expect(after.form[form]).toNotExist();
+      const after = store.getState();
+      expect(after.form).toBeA('object');
+      expect(after.form[form]).toNotExist();
+      done();
+    }, 200);
   });
 
   it('should NOT call destroy on unmount if destroyOnUnmount is disabled', () => {
