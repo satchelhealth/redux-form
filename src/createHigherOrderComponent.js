@@ -40,6 +40,7 @@ const createHigherOrderComponent = (config,
         if (initialValues) {
           initialize(initialValues, fields);
         }
+        this.mountedAt = Date.now();
       }
 
       componentWillReceiveProps(nextProps) {
@@ -52,7 +53,14 @@ const createHigherOrderComponent = (config,
       }
 
       componentWillUnmount() {
-        if (config.destroyOnUnmount) {
+        // this is an ugly bug patch; for reasons unknown, React 16.2 unmounts
+        // this component immediately after mounting it - it seems to have
+        // something to do with how Fiber works, but I have not dug into the
+        // details for the sake of the Redux-Form v4.0.0 <-> React 16.2
+        // integration (seeing this as a short term fix).  The patch is: if
+        // unmount is happening within 200 milliseconds of
+        // mount, do not destroy ("clean up") the form data in redux.
+        if (config.destroyOnUnmount && Date.now() - this.mountedAt > 200) {
           this.props.destroy();
         }
       }
